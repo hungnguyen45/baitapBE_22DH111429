@@ -1,0 +1,54 @@
+﻿
+@model IEnumerable<baitapBE_22DH111429.Models.Product>
+
+@{
+    ViewBag.Title = "Trang chủ";
+}
+
+<div class="jumbotron">
+    <h1>Chào mừng đến MyStore</h1>
+    <p>Khám phá các sản phẩm của chúng tôi.</p>
+</div>
+
+<h2 class="mb-4">Danh sách sản phẩm</h2>
+
+@if (Model != null && Model.Any())
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    @if (!string.IsNullOrEmpty(item.ProductImage))
+                    {
+                        <img src="@Url.Content(item.ProductImage)"
+                             class="card-img-top"
+                             alt="@item.ProductName"
+                             style="height:220px; object-fit:contain;" />
+                    }
+
+                    <div class="card-body">
+                        <h5 class="card-title">@item.ProductName</h5>
+
+                        <p class="card-text">
+                            @item.ProductDecription
+                        </p>
+
+                        <p class="text-danger font-weight-bold">
+                            @item.ProductPrice.ToString("N0") VNĐ
+                        </p>
+
+                        <a href="@Url.Action("Details", "Home", new { id = item.ProductID })"
+                           class="btn btn-primary">
+                            Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>Chưa có sản phẩm trong cơ sở dữ liệu.</p>
+}

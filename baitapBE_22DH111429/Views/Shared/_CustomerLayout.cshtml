@@ -18,6 +18,26 @@
 
             <div class="navbar-nav">
                 <a class="nav-link"
+                   href="@Url.Action("Index", "Home")">
+                    Trang chủ
+                </a>
+
+                <a class="nav-link"
+                   href="@Url.Action("Index", "Home")">
+                    Sản phẩm
+                </a>
+
+                <a class="nav-link"
+                   href="@Url.Action("Index", "Cart")">
+                    Giỏ hàng
+                </a>
+
+                <a class="nav-link"
+                   href="@Url.Action("Login", "Account")">
+                    Đăng nhập
+                </a>
+            </div>
+                <a class="nav-link"
                    href="@Url.Action("Index", "Home", new { area = "" })">
                     Trang chủ
                 </a>
@@ -30,7 +50,10 @@
                    href="@Url.Action("Index", "Cart", new { area = "" })">
                     Giỏ hàng
                 </a> 
-                <a class="nav-link" href="#">Đăng nhập</a>
+                <a class="nav-link"
+                   href="@Url.Action("Login", "Account")">
+                    Đăng nhập
+                </a>
             </div>
         </div>
     </nav>

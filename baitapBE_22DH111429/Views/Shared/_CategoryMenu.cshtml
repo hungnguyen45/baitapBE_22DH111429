@@ -1,0 +1,8 @@
+﻿@model IEnumerable<baitapBE_22DH111429.Models.Category>
+<div class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="@Url.Action("Index", "Category")" role="button" data-bs-toggle="dropdown">Danh mục</a>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="@Url.Action("Index", "Category")">Tất cả sản phẩm</a></li>
+        @foreach (var c in Model) { <li><a class="dropdown-item" href="@Url.Action("Index", "Category", new { categoryId = c.CategoryID })">@c.CategoryName</a></li> }
+    </ul>
+</div>

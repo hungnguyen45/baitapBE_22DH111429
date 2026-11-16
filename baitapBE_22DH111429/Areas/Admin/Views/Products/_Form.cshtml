@@ -1,0 +1,13 @@
+﻿@model baitapBE_22DH111429.Models.ProductEditViewModel
+@using(Html.BeginForm(null,null,FormMethod.Post,new{enctype="multipart/form-data"}))
+{
+    @Html.AntiForgeryToken() @Html.ValidationSummary(true,"",new{@class="text-danger"})
+    @Html.HiddenFor(m=>m.ProductID) @Html.HiddenFor(m=>m.ProductImage)
+    <div class="mb-3">@Html.LabelFor(m=>m.ProductName,"Tên sản phẩm",new{@class="form-label"})@Html.TextBoxFor(m=>m.ProductName,new{@class="form-control",maxlength="200"})@Html.ValidationMessageFor(m=>m.ProductName,"",new{@class="text-danger"})</div>
+    <div class="mb-3">@Html.LabelFor(m=>m.CategoryID,"Danh mục",new{@class="form-label"})@Html.DropDownListFor(m=>m.CategoryID,(SelectList)ViewBag.Categories,"Chọn danh mục",new{@class="form-select"})@Html.ValidationMessageFor(m=>m.CategoryID,"",new{@class="text-danger"})</div>
+    <div class="mb-3">@Html.LabelFor(m=>m.ProductDecription,"Mô tả",new{@class="form-label"})@Html.TextAreaFor(m=>m.ProductDecription,4,60,new{@class="form-control",maxlength="2000"})@Html.ValidationMessageFor(m=>m.ProductDecription,"",new{@class="text-danger"})</div>
+    <div class="mb-3">@Html.LabelFor(m=>m.ProductPrice,"Giá",new{@class="form-label"})@Html.TextBoxFor(m=>m.ProductPrice,new{@class="form-control",type="number",min="0.01",step="0.01"})@Html.ValidationMessageFor(m=>m.ProductPrice,"",new{@class="text-danger"})</div>
+    <div class="row"><div class="col-md-6 mb-3">@Html.LabelFor(m=>m.Quantity,"Số lượng tồn",new{@class="form-label"})@Html.TextBoxFor(m=>m.Quantity,new{@class="form-control",type="number",min="0"})@Html.ValidationMessageFor(m=>m.Quantity,"",new{@class="text-danger"})</div><div class="col-md-6 mb-3">@Html.LabelFor(m=>m.SoldQuantity,"Số lượng đã bán",new{@class="form-label"})@Html.TextBoxFor(m=>m.SoldQuantity,new{@class="form-control",type="number",min="0"})@Html.ValidationMessageFor(m=>m.SoldQuantity,"",new{@class="text-danger"})</div></div>
+    <div class="mb-3"><label class="form-label">Ảnh sản phẩm (tối đa 5 MB)</label><input class="form-control" type="file" name="image" accept="image/jpeg,image/png,image/gif,image/webp"/>@if(!String.IsNullOrEmpty(Model.ProductImage)){<img src="@Url.Content(Model.ProductImage)" alt="Ảnh sản phẩm" class="mt-2" style="width:100px;height:100px;object-fit:contain"/>}</div>
+    <button class="btn btn-primary">Lưu</button> <a class="btn btn-secondary" href="@Url.Action("Index")">Hủy</a>
+}

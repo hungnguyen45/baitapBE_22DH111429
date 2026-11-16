@@ -1,39 +1,17 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewBag.Title - Admin MyStore</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-</head>
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>@ViewBag.Title - Admin MyStore</title>@Styles.Render("~/Content/css") @Scripts.Render("~/bundles/modernizr")</head>
 <body>
-    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="@Url.Action("Index", "Home", new { area = "Admin" })">
-                MyStore Admin
-            </a>
-            <div class="navbar-nav">
-                <a class="nav-link" href="@Url.Action("Index", "Home", new { area = "Admin" })">Dashboard</a>
-                <a class="nav-link" href="#">Danh mục</a>
-                <a class="nav-link" href="#">Sản phẩm</a>
-                <a class="nav-link" href="#">Đơn hàng</a>
-                <a class="nav-link" href="#">Khách hàng</a>
-            </div>
-        </div>
-    </nav>
-
-    <main class="container body-content mt-4">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - MyStore Admin</p>
-        </footer>
-    </main>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
-</html>
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg"><div class="container"><a class="navbar-brand" href="@Url.Action("Index","Home",new{area="Admin"})">MyStore Admin</a><div class="navbar-nav align-items-center">
+<a class="nav-link" href="@Url.Action("Index","Home",new{area="Admin"})">Dashboard</a>
+<div class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Quản lý danh mục</a><ul class="dropdown-menu"><li><a class="dropdown-item" href="@Url.Action("Index","Categories",new{area="Admin"})">Danh mục</a></li></ul></div>
+<div class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Quản lý hàng hóa</a><ul class="dropdown-menu"><li><a class="dropdown-item" href="@Url.Action("Index","Products",new{area="Admin"})">Sản phẩm</a></li></ul></div>
+<a class="nav-link" href="@Url.Action("Index","Warehouse",new{area="Admin"})">Quản lý kho</a>
+<a class="nav-link" href="@Url.Action("Index","Users",new{area="Admin"})">Người dùng</a>
+<a class="nav-link" href="@Url.Action("Index","Customers",new{area="Admin"})">Khách hàng</a>
+<a class="nav-link" href="@Url.Action("Index","Orders",new{area="Admin"})">Đơn hàng</a>
+<form action="@Url.Action("Logout","Account",new{area=""})" method="post" class="d-inline">@Html.AntiForgeryToken()<button type="submit" class="btn btn-link nav-link">Đăng xuất</button></form>
+</div></div></nav>
+<main class="container body-content mt-4">@RenderBody()<hr/><footer><p>&copy; @DateTime.Now.Year - MyStore Admin</p></footer></main>
+@Scripts.Render("~/bundles/jquery") @Scripts.Render("~/bundles/bootstrap") @RenderSection("scripts",required:false)
+</body></html>

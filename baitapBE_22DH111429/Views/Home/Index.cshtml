@@ -42,6 +42,13 @@
                            class="btn btn-primary">
                             Xem chi tiết
                         </a>
+                        @using (Html.BeginForm("Add", "Cart", FormMethod.Post, new { @class = "d-inline" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@item.ProductID" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit" class="btn btn-success">Mua</button>
+                        }
                     </div>
                 </div>
             </div>

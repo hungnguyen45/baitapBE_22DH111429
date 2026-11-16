@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -47,26 +48,31 @@ namespace baitapBE_22DH111429.Controllers
             {
                 return HttpNotFound();
             }
+            if (product.Quantity < 1)
+            {
+                TempData["Error"] = "Sản phẩm hiện đã hết hàng.";
+                return RedirectToAction("Index", "Home");
+            }
 
             var cart = GetCart();
             var item = cart.FirstOrDefault(p => p.ProductID == id);
 
             if (item == null)
             {
-                cart.Add(new CartItem
+                item = new CartItem
                 {
                     ProductID = product.ProductID,
                     ProductName = product.ProductName,
                     ProductPrice = product.ProductPrice,
                     ProductImage = product.ProductImage,
-                    Quantity = quantity
-                });
+                    Quantity = Math.Min(product.Quantity, quantity)
+                };
+                cart.Add(item);
             }
             else
             {
-                item.Quantity += quantity;
+                item.Quantity = Math.Min(product.Quantity, item.Quantity + quantity);
             }
-
             Session["Cart"] = cart;
 
             return RedirectToAction("Index");
@@ -88,7 +94,9 @@ namespace baitapBE_22DH111429.Controllers
                 }
                 else
                 {
-                    item.Quantity = quantity;
+                    var product = db.Product.Find(id);
+                    item.Quantity = product == null ? 0 : Math.Min(product.Quantity, quantity);
+                    if (item.Quantity == 0) cart.Remove(item);
                 }
             }
 

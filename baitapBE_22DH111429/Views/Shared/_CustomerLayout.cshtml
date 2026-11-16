@@ -1,4 +1,4 @@
-﻿
+@{ var cartItems = Session["Cart"] as System.Collections.Generic.List<baitapBE_22DH111429.Models.CartItem>; var cartCount = cartItems == null ? 0 : System.Linq.Enumerable.Sum(cartItems, x => x.Quantity); }
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,61 +11,37 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand"
-               href="@Url.Action("Index", "Home", new { area = "" })">
-                MyStore
-            </a>
-
-            <div class="navbar-nav">
-                <a class="nav-link"
-                   href="@Url.Action("Index", "Home")">
-                    Trang chủ
-                </a>
-
-                <a class="nav-link"
-                   href="@Url.Action("Index", "Home")">
-                    Sản phẩm
-                </a>
-
-                <a class="nav-link"
-                   href="@Url.Action("Index", "Cart")">
-                    Giỏ hàng
-                </a>
-
-                <a class="nav-link"
-                   href="@Url.Action("Login", "Account")">
-                    Đăng nhập
-                </a>
-            </div>
-                <a class="nav-link"
-                   href="@Url.Action("Index", "Home", new { area = "" })">
-                    Trang chủ
-                </a>
-                <a class="nav-link"
-                   href="@Url.Action("Index", "Home", new { area = "" })">
-                    Sản phẩm
-                </a>
-
-                <a class="nav-link"
-                   href="@Url.Action("Index", "Cart", new { area = "" })">
-                    Giỏ hàng
-                </a> 
-                <a class="nav-link"
-                   href="@Url.Action("Login", "Account")">
-                    Đăng nhập
-                </a>
+            <a class="navbar-brand" href="@Url.Action("Index", "Home", new { area = "" })">MyStore</a>
+            <div class="navbar-nav align-items-center">
+                <a class="nav-link" href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a>
+                <a class="nav-link" href="@Url.Action("Index", "Category")">Sản phẩm</a>
+                @Html.Action("CategoryMenu", "Home", new { area = "" })
+                <a class="nav-link" href="@Url.Action("Index", "Cart")">🛒 Giỏ hàng (@cartCount)</a>
+                @if (Session["Username"] != null)
+                {
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">👤 @Session["Username"]</a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="@Url.Action("Profile", "Account")">Hồ sơ khách hàng</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("MyOrder", "Orders")">Lịch sử mua hàng</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><form action="@Url.Action("Logout", "Account")" method="post">@Html.AntiForgeryToken()<button class="dropdown-item" type="submit">Đăng xuất</button></form></li>
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <a class="nav-link" href="@Url.Action("Login", "Account")">Đăng nhập</a>
+                    <a class="nav-link" href="@Url.Action("Register", "Account")">Đăng ký</a>
+                }
             </div>
         </div>
     </nav>
-
     <main class="container mt-4">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - MyStore</p>
-        </footer>
+        <footer><p>&copy; @DateTime.Now.Year - MyStore</p></footer>
     </main>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

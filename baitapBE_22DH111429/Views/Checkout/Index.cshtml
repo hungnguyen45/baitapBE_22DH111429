@@ -1,0 +1,31 @@
+﻿@model baitapBE_22DH111429.Models.CheckoutViewModel
+@{ ViewBag.Title = "Thanh toán"; Layout = "~/Views/Shared/_CustomerLayout.cshtml"; }
+<h2>Thông tin nhận hàng</h2>
+<p>Điền thông tin người nhận để hoàn tất đơn hàng.</p>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="mb-3">
+        @Html.LabelFor(m => m.CustomerName, new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CustomerName, "", new { @class = "text-danger" })
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.CustomerPhone, new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.CustomerPhone, new { @class = "form-control", type = "tel" })
+        @Html.ValidationMessageFor(m => m.CustomerPhone, "", new { @class = "text-danger" })
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.CustomerEmail, new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.CustomerEmail, new { @class = "form-control", type = "email" })
+        @Html.ValidationMessageFor(m => m.CustomerEmail, "", new { @class = "text-danger" })
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.AddressDelivery, new { @class = "form-label" })
+        @Html.TextAreaFor(m => m.AddressDelivery, 4, 60, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.AddressDelivery, "", new { @class = "text-danger" })
+    </div>
+    <button class="btn btn-success">Xác nhận đặt hàng</button>
+    <a href="@Url.Action("Index", "Cart")" class="btn btn-secondary">Quay lại giỏ hàng</a>
+}

@@ -25,6 +25,7 @@ namespace baitapBE_22DH111429.Models
         public System.DateTime OrderDate { get; set; }
         public decimal TotalAmount { get; set; }
         public string PaymentStatus { get; set; }
+        public string OrderStatus { get; set; }
         public string AddressDelivery { get; set; }
     
         public virtual Customer Customer { get; set; }

@@ -1,6 +1,4 @@
-﻿@{
-    ViewBag.Title = "Admin Home";
-}
-
-<h2>Trang quản trị Admin</h2>
-<p>Area Admin đã hoạt động thành công!</p>
+﻿@{ViewBag.Title="Dashboard";Layout="~/Areas/Admin/Views/Shared/_Layout.cshtml";}
+<h2>Trang quản trị</h2>
+<div class="row g-3"><div class="col-md-3"><div class="card"><div class="card-body"><h5>Sản phẩm</h5><strong>@ViewBag.ProductCount</strong></div></div></div><div class="col-md-3"><div class="card"><div class="card-body"><h5>Danh mục</h5><strong>@ViewBag.CategoryCount</strong></div></div></div><div class="col-md-3"><div class="card"><div class="card-body"><h5>Khách hàng</h5><strong>@ViewBag.CustomerCount</strong></div></div></div><div class="col-md-3"><div class="card"><div class="card-body"><h5>Đơn hàng</h5><strong>@ViewBag.OrderCount</strong></div></div></div></div>
+<div class="alert alert-warning mt-4">Sản phẩm cần nhập thêm: @ViewBag.LowStockCount</div>

@@ -6,8 +6,8 @@
 }
 
 <div class="row justify-content-center">
-    <div class="col-md-5">
-        <div class="card shadow mt-4">
+    <div class="col-md-6">
+        <div class="card shadow mt-4 mb-4">
             <div class="card-body p-4">
                 <h2 class="text-center mb-3">Tạo tài khoản</h2>
 
@@ -17,55 +17,105 @@
 
                 @using (Html.BeginForm("Register", "Account", FormMethod.Post))
                 {
-                    @Html.AntiForgeryToken()
+                @Html.AntiForgeryToken()
 
-                    @Html.ValidationSummary(true, "", new
+                @Html.ValidationSummary(true, "", new
+                {
+                    @class = "text-danger mb-3"
+                })
+
+                <div class="form-group mb-3">
+                    @Html.LabelFor(m => m.CustomerName, "Họ và tên")
+                    @Html.TextBoxFor(m => m.CustomerName, new
                     {
-                        @class = "text-danger mb-3"
+                        @class = "form-control",
+                        placeholder = "Nhập họ và tên"
                     })
+                    @Html.ValidationMessageFor(m => m.CustomerName, "", new
+                    {
+                        @class = "text-danger"
+                    })
+                </div>
 
-                    <div class="form-group mb-3">
-                        @Html.LabelFor(m => m.Username, "Tên đăng nhập")
-                        @Html.TextBoxFor(m => m.Username, new
-                        {
-                            @class = "form-control",
-                            placeholder = "Nhập tên đăng nhập"
-                        })
-                        @Html.ValidationMessageFor(m => m.Username, "", new
-                        {
-                            @class = "text-danger"
-                        })
-                    </div>
+                <div class="form-group mb-3">
+                    @Html.LabelFor(m => m.Username, "Tên đăng nhập")
+                    @Html.TextBoxFor(m => m.Username, new
+                    {
+                        @class = "form-control",
+                        placeholder = "Nhập tên đăng nhập"
+                    })
+                    @Html.ValidationMessageFor(m => m.Username, "", new
+                    {
+                        @class = "text-danger"
+                    })
+                </div>
 
-                    <div class="form-group mb-3">
-                        @Html.LabelFor(m => m.Password, "Mật khẩu")
-                        @Html.PasswordFor(m => m.Password, new
-                        {
-                            @class = "form-control",
-                            placeholder = "Nhập mật khẩu"
-                        })
-                        @Html.ValidationMessageFor(m => m.Password, "", new
-                        {
-                            @class = "text-danger"
-                        })
-                    </div>
+                <div class="form-group mb-3">
+                    @Html.LabelFor(m => m.CustomerPhone, "Số điện thoại")
+                    @Html.TextBoxFor(m => m.CustomerPhone, new
+                    {
+                        @class = "form-control",
+                        placeholder = "Nhập số điện thoại"
+                    })
+                    @Html.ValidationMessageFor(m => m.CustomerPhone, "", new
+                    {
+                        @class = "text-danger"
+                    })
+                </div>
 
-                    <div class="form-group mb-3">
-                        @Html.LabelFor(m => m.ConfirmPassword, "Xác nhận mật khẩu")
-                        @Html.PasswordFor(m => m.ConfirmPassword, new
-                        {
-                            @class = "form-control",
-                            placeholder = "Nhập lại mật khẩu"
-                        })
-                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new
-                        {
-                            @class = "text-danger"
-                        })
-                    </div>
+                <div class="form-group mb-3">
+                    @Html.LabelFor(m => m.CustomerEmail, "Email")
+                    @Html.TextBoxFor(m => m.CustomerEmail, new
+                    {
+                        @class = "form-control",
+                        placeholder = "Nhập email",
+                        type = "email"
+                    })
+                    @Html.ValidationMessageFor(m => m.CustomerEmail, "", new
+                    {
+                        @class = "text-danger"
+                    })
+                </div>
 
-                    <button type="submit" class="btn btn-primary w-100">
-                        Đăng ký
-                    </button>
+                <div class="form-group mb-3">
+                    @Html.LabelFor(m => m.CustomerAddress, "Địa chỉ")
+                    @Html.TextAreaFor(m => m.CustomerAddress, new
+                    {
+                        @class = "form-control",
+                        rows = "2",
+                        placeholder = "Nhập địa chỉ"
+                    })
+                </div>
+
+                <div class="form-group mb-3">
+                    @Html.LabelFor(m => m.Password, "Mật khẩu")
+                    @Html.PasswordFor(m => m.Password, new
+                    {
+                        @class = "form-control",
+                        placeholder = "Nhập mật khẩu"
+                    })
+                    @Html.ValidationMessageFor(m => m.Password, "", new
+                    {
+                        @class = "text-danger"
+                    })
+                </div>
+
+                <div class="form-group mb-3">
+                    @Html.LabelFor(m => m.ConfirmPassword, "Xác nhận mật khẩu")
+                    @Html.PasswordFor(m => m.ConfirmPassword, new
+                    {
+                        @class = "form-control",
+                        placeholder = "Nhập lại mật khẩu"
+                    })
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new
+                    {
+                        @class = "text-danger"
+                    })
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">
+                    Đăng ký
+                </button>
                 }
 
                 <p class="text-center mt-3 mb-0">

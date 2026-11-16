@@ -1,0 +1,5 @@
+﻿@model baitapBE_22DH111429.Models.Product
+@{ViewBag.Title="Xóa sản phẩm";Layout="~/Areas/Admin/Views/Shared/_Layout.cshtml";}
+<h2>Xóa sản phẩm</h2>@Html.Partial("~/Views/Shared/_ProductDetails.cshtml",Model)
+@if((bool)ViewBag.HasOrders){<div class="alert alert-warning mt-3">Không thể xóa sản phẩm đã có trong đơn hàng.</div>}else{using(Html.BeginForm("Delete","Products",FormMethod.Post)){@Html.AntiForgeryToken()<input type="hidden" name="id" value="@Model.ProductID"/><button class="btn btn-danger">Xác nhận xóa</button>}}
+<a class="btn btn-secondary mt-3" href="@Url.Action("Index")">Quay lại</a>

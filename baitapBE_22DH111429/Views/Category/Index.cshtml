@@ -1,0 +1,14 @@
+﻿@model IEnumerable<baitapBE_22DH111429.Models.Product>
+@{ ViewBag.Title = "Sản phẩm"; var cats = ViewBag.Categories as IEnumerable<baitapBE_22DH111429.Models.Category>; }
+<h2>Sản phẩm</h2>
+<form method="get" class="row g-2 mb-4 align-items-end">
+    <div class="col-md-3"><label class="form-label">Danh mục</label><select class="form-select" name="categoryId"><option value="">Tất cả danh mục</option>@foreach (var c in cats) { <option value="@c.CategoryID" selected="@(ViewBag.CategoryId == c.CategoryID)">@c.CategoryName</option> }</select></div>
+    <div class="col-md-3"><label class="form-label">Tên sản phẩm</label><input class="form-control" name="search" value="@ViewBag.Search" placeholder="Tìm sản phẩm" /></div>
+    <div class="col-md-2"><label class="form-label">Giá từ</label><input class="form-control" name="minPrice" type="number" min="0" value="@ViewBag.MinPrice" /></div>
+    <div class="col-md-2"><label class="form-label">Giá đến</label><input class="form-control" name="maxPrice" type="number" min="0" value="@ViewBag.MaxPrice" /></div>
+    <div class="col-md-2"><label class="form-label">Sắp xếp</label><select class="form-select" name="sort"><option value="name" selected="@(ViewBag.Sort == "name")">Tên</option><option value="price-asc" selected="@(ViewBag.Sort == "price-asc")">Giá tăng</option><option value="price-desc" selected="@(ViewBag.Sort == "price-desc")">Giá giảm</option></select></div>
+    <div class="col-12"><button class="btn btn-primary">Tìm / lọc</button> <a class="btn btn-outline-secondary" href="@Url.Action("Index")">Xóa lọc</a></div>
+</form>
+@if (!Model.Any()) { <div class="alert alert-info">Không có sản phẩm phù hợp.</div> }
+<div class="row">@foreach (var p in Model) { <div class="col-md-4 mb-4"><div class="card h-100">@if (!String.IsNullOrEmpty(p.ProductImage)) { <img src="@Url.Content(p.ProductImage)" class="card-img-top" alt="@p.ProductName" style="height:220px;object-fit:contain"/> }<div class="card-body"><small class="text-muted">@p.Category.CategoryName</small><h5>@p.ProductName</h5><p>@p.ProductDecription</p><p class="text-danger">@p.ProductPrice.ToString("N0") VNĐ</p><p>Còn @p.Quantity sản phẩm</p><a class="btn btn-outline-primary" href="@Url.Action("Details", "Home", new { id = p.ProductID })">Xem chi tiết</a> @using (Html.BeginForm("Add", "Cart", FormMethod.Post, new { @class = "d-inline" })) { @Html.AntiForgeryToken()<input type="hidden" name="id" value="@p.ProductID"/><input type="hidden" name="quantity" value="1"/><button class="btn btn-primary">Mua</button> }</div></div></div> }</div>
+@if ((int)ViewBag.TotalPages > 1) { <nav><ul class="pagination">@for (int i=1;i<=(int)ViewBag.TotalPages;i++) { <li class="page-item @(i==(int)ViewBag.Page?"active":"")"><a class="page-link" href="@Url.Action("Index", new { categoryId=ViewBag.CategoryId, search=ViewBag.Search, minPrice=ViewBag.MinPrice, maxPrice=ViewBag.MaxPrice, sort=ViewBag.Sort, page=i })">@i</a></li> }</ul></nav> }

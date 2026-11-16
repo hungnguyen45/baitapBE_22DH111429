@@ -1,0 +1,6 @@
+﻿@model baitapBE_22DH111429.Models.Category
+@{ ViewBag.Title="Xóa danh mục"; Layout="~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+<h2>Xóa danh mục</h2>
+<p>Bạn có chắc muốn xóa danh mục <strong>@Model.CategoryName</strong>?</p>
+@if((int)ViewBag.ProductCount>0){<div class="alert alert-warning">Danh mục đang có @ViewBag.ProductCount sản phẩm và không thể xóa.</div>} else { using(Html.BeginForm("Delete","Categories",FormMethod.Post)){ @Html.AntiForgeryToken()<input type="hidden" name="id" value="@Model.CategoryID"/><button class="btn btn-danger">Xác nhận xóa</button> } }
+<a class="btn btn-secondary" href="@Url.Action("Index")">Quay lại</a>

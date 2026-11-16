@@ -8,6 +8,7 @@
 
 <div class="container mt-4">
     <h2 class="mb-4">Giỏ hàng của bạn</h2>
+    @if (TempData["Error"] != null) { <div class="alert alert-warning">@TempData["Error"]</div> }
 
     @if (Model == null || !Model.Any())
     {
@@ -112,6 +113,7 @@
                class="btn btn-secondary">
                 Tiếp tục mua sắm
             </a>
+            <a href="@Url.Action("Index", "Checkout")" class="btn btn-success ms-2">Tiến hành thanh toán</a>
         </div>
     }
 </div>

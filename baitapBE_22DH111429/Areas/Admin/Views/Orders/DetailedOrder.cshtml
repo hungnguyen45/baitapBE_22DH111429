@@ -1,0 +1,7 @@
+﻿@model baitapBE_22DH111429.Models.Order
+@{ ViewBag.Title = "Chi tiết đơn hàng #" + Model.OrderID; Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+<h2>Chi tiết đơn hàng #@Model.OrderID</h2>
+@if (TempData["Error"] != null) { <div class="alert alert-danger">@TempData["Error"]</div> } @if (TempData["Success"] != null) { <div class="alert alert-success">@TempData["Success"]</div> }
+<h4>Hóa đơn</h4>
+@Html.Partial("~/Views/Shared/_OrderInvoice.cshtml", Model)
+<a class="btn btn-primary" href="@Url.Action("UpdateStatus", new { id = Model.OrderID })">Cập nhật trạng thái</a> <a class="btn btn-outline-secondary" href="@Url.Action("Index")">Quay lại</a>

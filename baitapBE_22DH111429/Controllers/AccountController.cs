@@ -41,24 +41,58 @@ namespace baitapBE_22DH111429.Controllers
                 return View(model);
             }
 
-            User user = new User
+            using (var transaction = db.Database.BeginTransaction())
             {
-                Username = username,
-                Password = HashPassword(model.Password),
-                UserRole = "U"
-            };
+                try
+                {
+                    User user = new User
+                    {
+                        Username = username,
+                        Password = HashPassword(model.Password),
+                        UserRole = "U"
+                    };
 
-            db.User.Add(user);
-            db.SaveChanges();
+                    Customer customer = new Customer
+                    {
+                        Username = username,
+                        CustomerName = model.CustomerName.Trim(),
+                        CustomerPhone = model.CustomerPhone.Trim(),
+                        CustomerEmail = string.IsNullOrWhiteSpace(model.CustomerEmail)
+                            ? null : model.CustomerEmail.Trim(),
+                        CustomerAddress = string.IsNullOrWhiteSpace(model.CustomerAddress)
+                            ? null : model.CustomerAddress.Trim(),
+                        User = user
+                    };
 
-            TempData["Success"] = "Đăng ký thành công! Vui lòng đăng nhập.";
+                    db.User.Add(user);
+                    db.Customer.Add(customer);
 
-            return RedirectToAction("Login");
+                    db.SaveChanges();
+                    transaction.Commit();
+
+                    TempData["Success"] =
+                        "Đăng ký thành công! Vui lòng đăng nhập.";
+
+                    return RedirectToAction("Login");
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+
+                    ModelState.AddModelError(
+                        "",
+                        "Đăng ký không thành công. Vui lòng kiểm tra lại thông tin."
+                    );
+
+                    return View(model);
+                }
+            }
         }
 
         [HttpGet]
         public ActionResult Login()
         {
+            ViewBag.ShowAdminSetup = Request.IsLocal && !db.User.Any(u => u.UserRole.Trim() == "A");
             return View(new LoginViewModel());
         }
 
@@ -70,7 +104,10 @@ namespace baitapBE_22DH111429.Controllers
                 model = new LoginViewModel();
 
             if (!ModelState.IsValid)
+            {
+                ViewBag.ShowAdminSetup = Request.IsLocal && !db.User.Any(u => u.UserRole.Trim() == "A");
                 return View(model);
+            }
 
             string username = model.Username.Trim();
 
@@ -85,6 +122,7 @@ namespace baitapBE_22DH111429.Controllers
                     "",
                     "Tên đăng nhập hoặc mật khẩu không chính xác."
                 );
+                ViewBag.ShowAdminSetup = Request.IsLocal && !db.User.Any(u => u.UserRole.Trim() == "A");
 
                 return View(model);
             }
@@ -104,6 +142,34 @@ namespace baitapBE_22DH111429.Controllers
             }
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public new ActionResult Profile()
+        {
+            var username = Session["Username"] as string;
+            if (String.IsNullOrEmpty(username)) return RedirectToAction("Login");
+            var customer = db.Customer.FirstOrDefault(c => c.Username == username);
+            return View(customer == null
+                ? new CustomerProfileViewModel { CustomerName = username }
+                : new CustomerProfileViewModel { CustomerName = customer.CustomerName, CustomerPhone = customer.CustomerPhone, CustomerEmail = customer.CustomerEmail, CustomerAddress = customer.CustomerAddress });
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public new ActionResult Profile(CustomerProfileViewModel model)
+        {
+            var username = Session["Username"] as string;
+            if (String.IsNullOrEmpty(username)) return RedirectToAction("Login");
+            if (!ModelState.IsValid) return View(model);
+            var customer = db.Customer.FirstOrDefault(c => c.Username == username);
+            if (customer == null) { customer = new Customer { Username = username }; db.Customer.Add(customer); }
+            customer.CustomerName = model.CustomerName.Trim();
+            customer.CustomerPhone = model.CustomerPhone.Trim();
+            customer.CustomerEmail = String.IsNullOrWhiteSpace(model.CustomerEmail) ? null : model.CustomerEmail.Trim();
+            customer.CustomerAddress = String.IsNullOrWhiteSpace(model.CustomerAddress) ? null : model.CustomerAddress.Trim();
+            db.SaveChanges();
+            TempData["Success"] = "Đã lưu hồ sơ khách hàng.";
+            return RedirectToAction("Profile");
         }
 
         [HttpPost]

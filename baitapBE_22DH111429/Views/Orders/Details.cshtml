@@ -1,0 +1,4 @@
+﻿@model baitapBE_22DH111429.Models.Order
+@{ViewBag.Title="Hóa đơn đơn hàng #"+Model.OrderID;Layout="~/Views/Shared/_CustomerLayout.cshtml";}
+<h2>Hóa đơn đơn hàng #@Model.OrderID</h2>@Html.Partial("~/Views/Shared/_OrderInvoice.cshtml",Model)
+<a class="btn btn-secondary" href="@Url.Action("MyOrder")">Quay lại đơn hàng của tôi</a>

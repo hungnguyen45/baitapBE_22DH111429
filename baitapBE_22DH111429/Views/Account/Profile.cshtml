@@ -1,0 +1,10 @@
+﻿@model baitapBE_22DH111429.Models.CustomerProfileViewModel
+@{ ViewBag.Title = "Hồ sơ khách hàng"; }
+<h2>Hồ sơ khách hàng</h2>
+@if (TempData["Success"] != null) { <div class="alert alert-success">@TempData["Success"]</div> }
+@using (Html.BeginForm()) { @Html.AntiForgeryToken() @Html.ValidationSummary(true,"",new{@class="text-danger"})
+<div class="mb-3">@Html.LabelFor(m=>m.CustomerName,new{@class="form-label"})@Html.TextBoxFor(m=>m.CustomerName,new{@class="form-control"})@Html.ValidationMessageFor(m=>m.CustomerName,"",new{@class="text-danger"})</div>
+<div class="mb-3">@Html.LabelFor(m=>m.CustomerPhone,new{@class="form-label"})@Html.TextBoxFor(m=>m.CustomerPhone,new{@class="form-control"})@Html.ValidationMessageFor(m=>m.CustomerPhone,"",new{@class="text-danger"})</div>
+<div class="mb-3">@Html.LabelFor(m=>m.CustomerEmail,new{@class="form-label"})@Html.TextBoxFor(m=>m.CustomerEmail,new{@class="form-control",type="email"})@Html.ValidationMessageFor(m=>m.CustomerEmail,"",new{@class="text-danger"})</div>
+<div class="mb-3">@Html.LabelFor(m=>m.CustomerAddress,new{@class="form-label"})@Html.TextAreaFor(m=>m.CustomerAddress,3,60,new{@class="form-control"})@Html.ValidationMessageFor(m=>m.CustomerAddress,"",new{@class="text-danger"})</div>
+<button class="btn btn-primary">Lưu hồ sơ</button> <a href="@Url.Action("MyOrder","Orders")" class="btn btn-secondary">Lịch sử mua hàng</a> }

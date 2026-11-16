@@ -1,0 +1,12 @@
+﻿@model baitapBE_22DH111429.Models.Order
+@{ViewBag.Title="Cập nhật trạng thái đơn hàng";Layout="~/Areas/Admin/Views/Shared/_Layout.cshtml";}
+<h2>Cập nhật trạng thái đơn hàng #@Model.OrderID</h2>
+@if(TempData["Error"]!=null){<div class="alert alert-danger">@TempData["Error"]</div>}
+<div class="card mb-3"><div class="card-body"><p><strong>Khách hàng:</strong> @Model.Customer.CustomerName</p><p><strong>Ngày đặt:</strong> @Model.OrderDate.ToString("dd/MM/yyyy")</p><p><strong>Trạng thái hiện tại:</strong> @Model.OrderStatus · @Model.PaymentStatus</p><p><strong>Tổng tiền:</strong> @Model.TotalAmount.ToString("N0") VNĐ</p></div></div>
+@using(Html.BeginForm("UpdateStatus","Orders",FormMethod.Post))
+{
+    @Html.AntiForgeryToken()<input type="hidden" name="id" value="@Model.OrderID"/>
+    <div class="mb-3"><label class="form-label">Trạng thái đơn hàng</label><select name="orderStatus" class="form-select" style="max-width:360px">@foreach(var s in (string[])ViewBag.Statuses){<option value="@s" selected="@(Model.OrderStatus==s)">@s</option>}</select></div>
+    <div class="mb-3"><label class="form-label">Trạng thái thanh toán</label><select name="paymentStatus" class="form-select" style="max-width:360px"><option value="Chưa thanh toán" selected="@(Model.PaymentStatus=="Chưa thanh toán")">Chưa thanh toán</option><option value="Đã thanh toán" selected="@(Model.PaymentStatus=="Đã thanh toán")">Đã thanh toán</option></select></div>
+    <button class="btn btn-primary">Lưu trạng thái</button> <a class="btn btn-secondary" href="@Url.Action("Details",new{id=Model.OrderID})">Hủy</a>
+}

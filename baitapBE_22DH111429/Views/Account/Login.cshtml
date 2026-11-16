@@ -62,6 +62,12 @@
                     Chưa có tài khoản?
                     @Html.ActionLink("Đăng ký ngay", "Register", "Account")
                 </p>
+                @if (ViewBag.ShowAdminSetup == true)
+                {
+                    <p class="text-center mt-2 mb-0">
+                        <a href="@Url.Action("Index", "Setup", new { area = "Admin" })">Thiết lập tài khoản quản trị đầu tiên</a>
+                    </p>
+                }
             </div>
         </div>
     </div>

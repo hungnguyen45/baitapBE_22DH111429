@@ -1,0 +1,5 @@
+﻿@model baitapBE_22DH111429.Models.Customer
+@{ViewBag.Title="Chi tiết khách hàng";Layout="~/Areas/Admin/Views/Shared/_Layout.cshtml";}
+<h2>Chi tiết khách hàng</h2><div class="card mb-4"><div class="card-body"><p><strong>Họ tên:</strong> @Model.CustomerName</p><p><strong>Tên đăng nhập:</strong> @Model.Username</p><p><strong>Số điện thoại:</strong> @Model.CustomerPhone</p><p><strong>Email:</strong> @Model.CustomerEmail</p><p><strong>Địa chỉ:</strong> @Model.CustomerAddress</p></div></div>
+<h3>Đơn hàng của khách hàng</h3>@Html.Partial("~/Areas/Admin/Views/Shared/_OrderSummaries.cshtml",Model.Order.OrderByDescending(o=>o.OrderDate).ToList())
+<a class="btn btn-secondary mt-3" href="@Url.Action("Index")">Quay lại khách hàng</a>

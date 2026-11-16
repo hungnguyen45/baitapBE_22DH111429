@@ -1,0 +1,6 @@
+﻿@model IEnumerable<baitapBE_22DH111429.Models.User>
+@{ViewBag.Title="Quản lý người dùng";Layout="~/Areas/Admin/Views/Shared/_Layout.cshtml";}
+<h2>Quản lý tài khoản quản trị</h2>
+@if(TempData["Success"]!=null){<div class="alert alert-success">@TempData["Success"]</div>} @if(TempData["Error"]!=null){<div class="alert alert-danger">@TempData["Error"]</div>}
+<p>@Html.ActionLink("Thêm tài khoản quản trị","Create",null,new{@class="btn btn-primary"})</p>
+<table class="table table-striped"><thead><tr><th>Tên đăng nhập</th><th>Vai trò</th><th>Thao tác</th></tr></thead><tbody>@foreach(var u in Model){<tr><td>@u.Username</td><td>Quản trị viên</td><td>@Html.ActionLink("Sửa","Edit",new{id=u.Username},new{@class="btn btn-sm btn-outline-primary"}) @using(Html.BeginForm("Delete","Users",new{id=u.Username},FormMethod.Post,new{@class="d-inline"})){@Html.AntiForgeryToken()<button class="btn btn-sm btn-outline-danger">Xóa</button>}</td></tr>}</tbody></table>

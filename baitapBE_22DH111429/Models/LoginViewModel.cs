@@ -6,6 +6,7 @@ namespace baitapBE_22DH111429.Models
     public class LoginViewModel
     {
         [Required(ErrorMessage = "Vui lòng nhập tên đăng nhập")]
+        [StringLength(255)]
         public string Username { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]

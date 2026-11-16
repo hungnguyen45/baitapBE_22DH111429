@@ -1,0 +1,5 @@
+﻿@model IEnumerable<baitapBE_22DH111429.Models.Customer>
+@{ViewBag.Title="Quản lý khách hàng";Layout="~/Areas/Admin/Views/Shared/_Layout.cshtml";}
+<h2>Danh sách khách hàng</h2>
+<form method="get" class="row g-2 mb-3"><div class="col-md-5"><input class="form-control" name="search" value="@ViewBag.Search" placeholder="Tên hoặc số điện thoại"/></div><div class="col-md-2"><button class="btn btn-primary">Tìm kiếm</button></div></form>
+@if(!Model.Any()){<div class="alert alert-info">Chưa có khách hàng phù hợp.</div>}else{<table class="table table-striped"><thead><tr><th>Họ tên</th><th>Số điện thoại</th><th>Email</th><th>Đơn hàng</th><th></th></tr></thead><tbody>@foreach(var c in Model){<tr><td>@c.CustomerName</td><td>@c.CustomerPhone</td><td>@c.CustomerEmail</td><td>@c.Order.Count</td><td>@Html.ActionLink("Chi tiết","Details",new{id=c.CustomerID},new{@class="btn btn-sm btn-outline-primary"})</td></tr>}</tbody></table>}

@@ -19,11 +19,11 @@
                 <a class="nav-link" href="@Url.Action("Index", "Cart")">🛒 Giỏ hàng (@cartCount)</a>
                 @if (Session["Username"] != null)
                 {
+                    <a class="nav-link" href="@Url.Action("MyOrder", "Orders")">Đơn hàng của tôi</a>
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">👤 @Session["Username"]</a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="@Url.Action("Profile", "Account")">Hồ sơ khách hàng</a></li>
-                            <li><a class="dropdown-item" href="@Url.Action("MyOrder", "Orders")">Lịch sử mua hàng</a></li>
                             <li><hr class="dropdown-divider" /></li>
                             <li><form action="@Url.Action("Logout", "Account")" method="post">@Html.AntiForgeryToken()<button class="dropdown-item" type="submit">Đăng xuất</button></form></li>
                         </ul>
